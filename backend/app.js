@@ -12,7 +12,7 @@ const con= mysql.createConnection ({             //On se connecte à notre base 
   host: 'localhost',
   user: 'root',
   password: 'Fayssal02',
-  database : "groupomania"
+  database : "groupomania" 
   
  });
 con.connect ((err) => {
@@ -39,45 +39,10 @@ con.end ((err) => {
 }); 
 
 app.use(bodyParser.json()); 
-
 app.use('/auth',userRoutes);
 
 
-
-
- 
-// con.query ('SELECT * FROM user ', (err, lignes) => {
-//     if (err) throw err;
-  
-//     console.log ('Données reçues de Db:');
-//     console.log (lignes);
-
-//     lignes.forEach((ligne) => {
-//         console.log (`${ligne.Prenom} habite à  ${ligne.villeEtudiant}`);
-//       });
-
-
-      
-//   });
-
-getAllUsers();
-
-  const user = {
-    // idUser: `E9`,
-    Prenom: 'Jean',
-    Nom: 'Dupont',
-    Sexe: 'M',
-    Fonction: 'Employé',
-    mail: 'Jdupont@gmail.com',
-    password: 'Jeumont'};
-
-    // con.query ('INSERT INTO user SET?', user, (err, res) => {
-    //     if (err) throw err;
-      
-        //console.log ('ID dernière insertion:', res.insertId);
-        //console.log(res);
-      // });
-
+connectToDb();
 
 
 

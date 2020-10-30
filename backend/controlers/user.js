@@ -2,6 +2,8 @@ const express = require('express');
 const mysql = require ('mysql'); 
 // import {user} from '../models/user';
 // const User = require('../models/user');
+const bCrypt = require('bcrypt');                           //On va utiliser bcrypt pour crypter le mot de passe de l'utilisateur
+const jwt = require('jsonwebtoken');
 
 class  User {
 
@@ -40,7 +42,7 @@ exports.getAllUsers = (req,res,next) => {
         console.log(lignes);
     
         lignes.forEach((ligne) => {
-            console.log (`${ligne.Prenom} habite à  ${ligne.villeEtudiant}`);
+            console.log (`${ligne.prenom} est  ${ligne.fonction}`);
           });
     
     
@@ -49,19 +51,42 @@ exports.getAllUsers = (req,res,next) => {
   
 };
 
-exports.addThisUser = (req,res,next) => {
-    newUser = new User(req.body.userToAdd.prenom,req.body.userToAdd.nom,req.body.userToAdd.sexe,req.body.userToAdd.fonction,req.body.userToAdd.mail,"test");
-    con.query ('INSERT INTO user SET?', newUser, (err, res) => {
-        if (err) throw err;
+
+    exports.signup = (req,res) => {
       
-        console.log ('ID dernière insertion:', res.insertId);
-        console.log(res);
-      });
-    
+            bCrypt.hash(req.body.password, 10)                          //Grâce à bcrypt on crypte 10 fois le mot de passe de l'utilisateur avant de l'envoyer à la base de données
+              
+              .then (async  hash =>  {
+                    const newUser = new User(req.body.prenom,req.body.nom,req.body.sexe,req.body.fonction,req.body.mail,hash);
+                    await con.query ('INSERT INTO user SET?', newUser, (err, res) => {
+                      if (err) return err
+                      else{ console.log (`${req.body.prenom} à bien était ajouté`);
+                            
+                            () => res.status(201).json({message : "utilisateur crée"});  
+                          };
+                          
+                       
+                    }
+                    )
+                    
+                    
+                    
+                   
+                  })
+                  .catch(error => res.status(500).json({error}));
+             
+    };
 
-    console.log(req.body.userToAdd.prenom);
+    exports.signin = (req,res) => {
+      console.log(req.body);
+      if(req.body.mail === "test@mail.com"){
+      return res.status(201).json({message : "Connecté"});
+      }
 
-};
+      else{
+        return res.status(401).json({error : "Utilisateur introuvable"})
+      }
 
 
 
+    }

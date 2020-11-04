@@ -4,6 +4,37 @@ const mysql = require ('mysql');            //
 const { getAllUsers } = require('./controlers/user');
 const userRoutes = require('./routes/user');
 const bodyParser = require('body-parser');          //On va utiliser bodyParser pour parser les requêtes json et s'en servir directement comme des objets javascript
+const db = require("./models");
+const { User} = require('./models/user');
+
+app.get('/select',(req,res) => {
+  res.send("select");
+});
+
+app.get('/insert',(req,res) => {
+  // User.create(
+  //          { 
+  //           prenom : "Pedro" ,
+  //           nom : "Rodriguez",
+  //           sexe : "m",
+  //           fonction : "tacos",
+  //           mail : "PRODRI@gmail.com",
+  //           password : "password"
+  //         }
+  // )
+  // .catch(err => {
+  //   if(err){
+  //     console.log(err)
+  //   }
+  // })
+});
+
+
+db.sequelize.sync().then((req)=> {
+app.listen(3001, () => {
+  console.log('server running');
+})
+});
 
 
 const connectToDb  = (req,res,next)=>{ 
@@ -18,7 +49,7 @@ const con= mysql.createConnection ({             //On se connecte à notre base 
 con.connect ((err) => {
   if (err) throw err;
   console.log ('Connecté!');
-}); 
+});  
 
 con.end ((err) => {
   // La connexion se termine normalement

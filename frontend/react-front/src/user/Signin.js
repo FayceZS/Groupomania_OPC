@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import {Redirect} from 'react-router-dom';
+import { signin, authenticate} from '../auth/index';
 
 class Signin extends Component {
 
@@ -13,7 +14,8 @@ class Signin extends Component {
     mail: "",
     password: "",
     error : "",
-    redirection : false
+    redirectToReferer : false,
+    loading : false
     
 
         }
@@ -24,8 +26,11 @@ class Signin extends Component {
         this.setState({ [name] : event.target.value});
     };
 
+   
+
     clickSubmit = event => {
-        event.preventDefault()
+        event.preventDefault();
+        this.setState({loading : true});
         const {mail,password} = this.state
         const user = {
             
@@ -33,12 +38,15 @@ class Signin extends Component {
             password : password
         }
 
-       this.signin(user)
+       signin(user)
        .then(data =>{
-           if(data.error) this.setState( {error : data.error});
+           if(data.error) this.setState( {error : data.error, loading : false});
            else
             {
                 //authentification
+                authenticate(data,()=>{
+                    this.setState({redirectToReferer : true})
+                })
                 //redirection
                 console.log("Utilisateur connecté");
                 
@@ -47,35 +55,17 @@ class Signin extends Component {
     }
         
     
-    signin = user => {
-
-         
-        return    fetch("http://localhost:3000/auth/signin",{
-            method : "POST",
-            headers : {
-                Accept : "application/json",
-                "Content-type" : "application/json"
-            },
-            body: JSON.stringify(user)
-        })
-        .then(res => {
-            
-            return res.json()
-            
-        })
-        .catch(res => {
-            if(res.status===401){
-                console.log("Utilisateur plomb")
-            }
-        })
-
-      
-    };
+   
 
     render() {
 
         
-        const {mail,password,error} = this.state;
+        const {error,redirectToReferer,loading} = this.state;
+
+        if(redirectToReferer){
+
+            return <Redirect to='/'/>
+        }
         return(
 
             
@@ -108,6 +98,12 @@ class Signin extends Component {
                                 {error}
                         </div>
                         
+                        
+                        { loading ? <div className="jumbotron text-center">
+                                        <p id="veriflogin">Chargement...</p>
+                        </div> : "" }
+
+
                         <button onClick={this.clickSubmit} className='btn btn-raised btn-primary'>Envoyer</button>
                         
                         

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import {Redirect} from 'react-router-dom';
+import {signup} from "../auth";
 
 class Signup extends Component {
 
@@ -15,7 +16,9 @@ class Signup extends Component {
     fonction: "",
     mail: "",
     password: "",
-    error : ''
+    error : '',
+    loading : false,
+    redirectToReferer : false
 
         }
     }
@@ -33,10 +36,11 @@ class Signup extends Component {
             sexe ,
             fonction ,
             mail ,
-            password : password
+            password : password,
+            
         }
 
-       this.signup(user)
+       signup(user)
        .then(data =>{
            if(data.error) this.setState( {error : data.error});
            else
@@ -47,35 +51,24 @@ class Signup extends Component {
                 sexe: "",
                 fonction: "",
                 mail: "",
-                
+                loading : true,
+                redirectToReferer : true
                 
             })
        });
     }
         
     
-    signup = user => {
-
-         
-        return    fetch("http://localhost:3000/auth/signup",{
-            method : "POST",
-            headers : {
-                Accept : "application/json",
-                "Content-type" : "application/json"
-            },
-            body: JSON.stringify(user)
-        })
-        .then(response => {
-            return response.json()
-        })
-        .catch(console.log("erreur"));
-
-       // return   this.signup;
-    };
+    
 
     render() {
 
-        // const {prenom,nom,sexe,fonction,mail,password} = this.state; 
+        const {error,redirectToReferer} = this.state;
+
+        if(redirectToReferer){
+
+            return <Redirect to='/signin'/>
+        }
 
         return(
 
@@ -147,7 +140,16 @@ class Signup extends Component {
                         <button onClick={this.clickSubmit} className='btn btn-raised btn-primary'>Envoyer</button>
                         
                         
+                        { this.state.loading ? <div className="jumbotron text-center">
+                                        <p id="veriflogin">Chargement...</p>
+                        </div> : "" }
 
+                        <div 
+                            className = 'alert alert-danger'
+                            style = {{display : error ? "" : "none"}}>
+
+                                {this.error}
+                        </div>
 
 
                     </form>

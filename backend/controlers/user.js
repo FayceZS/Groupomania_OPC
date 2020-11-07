@@ -17,6 +17,24 @@ const {user} = require('../models');
   
 //  });
 
+exports.getThisUser = (req,res,next) => {
+
+    user.findOne(
+        {where : {id: req.params.id}}
+      ).then(
+        (user) => {
+          res.status(200).json(user);
+        }
+      ).catch(
+        (error) => {
+          res.status(404).json({
+            error: error
+          });
+        }
+      )
+      .catch((error) => { res.status(500).json({error: error});});
+}
+
 exports.getAllUsers = (req,res,next) => {
     user.findAll()
     .then((users)=>{
@@ -57,15 +75,8 @@ exports.getAllUsers = (req,res,next) => {
     };
 
     exports.signin = (req,res) => {
-      // console.log(req.body);
-      // if(req.body.mail === "test@mail.com"){
-      // return res.status(201).json({message : "Connecté"});
-      // }
-
-      // else{
-      //   return res.status(401).json({error : "Utilisateur introuvable"})
-      // }
-
+      
+      
       user.findOne({where : {mail:req.body.mail}})                                                    //On récupère l'user qui veut se logger
         .then(user =>{
             if(!user){
@@ -77,9 +88,11 @@ exports.getAllUsers = (req,res,next) => {
                     return res.status(401).json({error : "Mot de passe incorrect"});
                 }
                 res.status(200).json({
-                    userId : user._id,
+                    userId : user.id,
+                    prenom : user.prenom,
+                    mail : user.mail,
                     token : jwt.sign(
-                        {userId : user._id},
+                        {userId : user.id},
                         //'$2b$10$WZrlJ3lvO4jURC4dUM8b5uE7ZiBMoD3rhdHzd9HUm3/gTpVEEFLzO',
                         '$2b$10$WZrlJ3lvO4jURC4dUM8b5uE7ZiBMoD3rhdHzd9HUm3/gTpVEEFLzO',
                         {expiresIn : '24h'}
@@ -94,4 +107,9 @@ exports.getAllUsers = (req,res,next) => {
 
 
 
-    }
+    };
+
+    exports.signout= (req,res) => {
+        
+        return(res.status(200))
+    };

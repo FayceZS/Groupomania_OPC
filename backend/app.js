@@ -21,6 +21,7 @@ const { User} = require('./models/user');
 
 app.use(bodyParser.json()); 
 app.use('/auth',userRoutes);
+app.use('/user',userRoutes);
 
 
 

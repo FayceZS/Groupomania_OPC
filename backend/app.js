@@ -1,11 +1,11 @@
 const express = require('express');  
-const app = express(); 
-const mysql = require ('mysql');            //
-const { getAllUsers } = require('./controlers/user');
+const app = express();           //
 const userRoutes = require('./routes/user');
 const bodyParser = require('body-parser');          //On va utiliser bodyParser pour parser les requêtes json et s'en servir directement comme des objets javascript
-const db = require("./models");
-const { User} = require('./models/user');
+const path = require('path');                     //On utilise le module path pour gérer nos fichiers en l'occurence nos images
+const multer = require('multer')
+
+
 
 
 
@@ -19,7 +19,12 @@ const { User} = require('./models/user');
   next();
 }); 
 
+// app.use(upload.array()); 
+// app.use(express.static('public'));
+
 app.use(bodyParser.json()); 
+app.use('/image', express.static(path.join(__dirname,'images')));         //On rend l'application statique pour gérer les images
+
 app.use('/auth',userRoutes);
 app.use('/user',userRoutes);
 

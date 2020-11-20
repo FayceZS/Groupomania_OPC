@@ -5,24 +5,20 @@ const mysql = require ('mysql');
 const bCrypt = require('bcrypt');                           //On va utiliser bcrypt pour crypter le mot de passe de l'utilisateur
 const jwt = require('jsonwebtoken');
 const {user} = require('../models');
+const Sequelize = require('sequelize');
+const fs = require("fs");
+const formidable = require('formidable');
+const _ = require('lodash');
 
 
-
-
-// const con= mysql.createConnection ({             //On se connecte à notre base de données mySQL
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'Fayssal02',
-//   database : "groupomania"
-  
-//  });
 
 exports.getThisUser = (req,res,next) => {
-
+    
     user.findOne(
         {where : {id: req.params.id}}
       ).then(
         (user) => {
+          
           res.status(200).json(user);
         }
       ).catch(
@@ -33,7 +29,122 @@ exports.getThisUser = (req,res,next) => {
         }
       )
       .catch((error) => { res.status(500).json({error: error});});
+};
+
+
+exports.deleteThisUser = (req,res,next) => {
+
+  user.destroy(
+      {where : {id: req.params.id}}
+    ).then(
+      (user) => {
+        res.status(200).json(user);
+      }
+    ).catch(
+      (error) => {
+        res.status(404).json({
+          error: error
+        });
+      }
+    )
+    .catch((error) => { res.status(500).json({error: error});});
 }
+
+exports.modifyThisUser = (req, res, next) => {
+
+  //console.log(`${req.protocol}://${req.get('host')}/images/${req.file.filename}`);
+  
+  
+  // const userUpdated = req.file ?
+  // {
+  //   ...JSON.parse(req.body),
+  //   imageUrl : `${req.protocol}://${req.get('host')}/image/${req.file.filename}`
+    
+  // } : {...req.body };
+  const userUpdated = req.body;
+  const userID = req.params.id;
+  console.log(` ID requête : ${req.params.id}`);
+
+  if(!req.body.password){
+    if(req.file){
+    const updateUser = ()=>{
+    user.update({prenom : userUpdated.prenom}, {where : { id : userID}})
+    user.update({nom : userUpdated.nom}, {where : { id : userID}})
+    user.update({fonction : userUpdated.fonction}, {where : { id : userID}})
+    user.update({mail : userUpdated.mail}, {where : { id : userID}})
+    user.update({imageUrl : `${req.protocol}://${req.get('host')}/image/${req.file.filename}`}, {where : { id : userID}})
+    .then(() => {res.status(201).json({message: 'Profil bien modifié' });})
+    .catch(()=>{res.status(400).json({error : "Le profil n'a pas était rempli correctement"})});
+    }
+
+    updateUser();
+
+    } else {
+      const updateUser = ()=>{
+        user.update({prenom : userUpdated.prenom}, {where : { id : userID}})
+        user.update({nom : userUpdated.nom}, {where : { id : userID}})
+        user.update({fonction : userUpdated.fonction}, {where : { id : userID}})
+        user.update({mail : userUpdated.mail}, {where : { id : userID}})
+        .then(() => {res.status(201).json({message: 'Profil bien modifié' });})
+        .catch(()=>{res.status(400).json({error : "Le profil n'a pas était rempli correctement"})});
+      } 
+
+      updateUser();
+    }
+  
+  
+    }else{ 
+              bCrypt.hash(req.body.password, 10)   
+            .then( async hash =>{
+            
+            if(!req.file){
+            const updateUser = ()=>{
+                user.update({prenom : userUpdated.prenom}, {where : { id : userID}})
+                user.update({nom : userUpdated.nom}, {where : { id : userID}})
+                user.update({fonction : userUpdated.fonction}, {where : { id : userID}})
+                user.update({mail : userUpdated.mail}, {where : { id : userID}})
+                user.update({password : hash}, {where : { id : userID}})
+                .then(() => {res.status(201).json({message: 'Profil bien modifié' });})
+                .catch(()=>{res.status(400).json({error : "Le profil n'a pas était rempli correctement"})});
+              } 
+            
+            updateUser();
+                  }else{
+                    const updateUser = ()=>{
+                      user.update({prenom : userUpdated.prenom}, {where : { id : userID}})
+                      user.update({nom : userUpdated.nom}, {where : { id : userID}})
+                      user.update({fonction : userUpdated.fonction}, {where : { id : userID}})
+                      user.update({mail : userUpdated.mail}, {where : { id : userID}})
+                      user.update({imageUrl : `${req.protocol}://${req.get('host')}/image/${req.file.filename}`}, {where : { id : userID}})
+                      user.update({password : hash}, {where : { id : userID}})
+                      .then(() => {res.status(201).json({message: 'Profil bien modifié' });})
+                      .catch(()=>{res.status(400).json({error : "Le profil n'a pas était rempli correctement"})});
+                      }
+                  
+                      updateUser();
+
+
+
+
+        } 
+  })}
+  
+  
+  
+  
+  
+  
+  
+
+};
+
+// exports.modifyThisUser = (req, res, next) => {
+
+//   console.log(req)
+  
+
+  
+// };
 
 exports.getAllUsers = (req,res,next) => {
     user.findAll()
@@ -44,6 +155,7 @@ exports.getAllUsers = (req,res,next) => {
     .catch(err => {console.log(err)})
   
 };
+
 
 
 
@@ -62,7 +174,8 @@ exports.getAllUsers = (req,res,next) => {
                    sexe : req.body.sexe,
                    fonction : req.body.fonction,
                    mail : req.body.mail,
-                   password : hash
+                   password : hash,
+                   
                  }
                 
                 

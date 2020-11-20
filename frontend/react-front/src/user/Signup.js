@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 import {signup} from "../auth";
+import {Link} from 'react-router-dom';
 
 class Signup extends Component {
 
@@ -18,12 +19,15 @@ class Signup extends Component {
     password: "",
     error : '',
     loading : false,
-    redirectToReferer : false
+    redirectToReferer : false,
+    open : false
 
         }
     }
 
     handleChange = name => event => {
+        
+        this.setState({error : ""});
         this.setState({ [name] : event.target.value});
     };
 
@@ -37,6 +41,7 @@ class Signup extends Component {
             fonction ,
             mail ,
             password : password,
+            open : true
             
         }
 
@@ -63,7 +68,7 @@ class Signup extends Component {
 
     render() {
 
-        const {error,redirectToReferer} = this.state;
+        const {error,redirectToReferer,open} = this.state;
 
         if(redirectToReferer){
 
@@ -77,7 +82,7 @@ class Signup extends Component {
                                                                 <h1>Groupomania</h1>
                 <h2 className="mt-5 mb-5">Inscrivez-vous :</h2>
 
-                    <form id="formulaireCommande" method="POST">
+                    <form  method="POST">
                         <div className="form-group">
 
 
@@ -149,6 +154,14 @@ class Signup extends Component {
                             style = {{display : error ? "" : "none"}}>
 
                                 {this.error}
+                        </div>
+
+                        <div
+
+                            className="alert alert-info"
+                            style = {{display : open ? "" : "none"}}>
+
+                                Votre compte a bien était crée <Link to="/signin">Connectez-vous</Link>
                         </div>
 
 

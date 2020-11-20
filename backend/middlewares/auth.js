@@ -4,6 +4,7 @@ module.exports = (req,res,next) => {
 
     try{
         const token = req.headers.authorization.split(' ')[1];                  //On récupére le token attribué à l'utilisateur
+        
         const decodedToken = jwt.verify(token, '$2b$10$WZrlJ3lvO4jURC4dUM8b5uE7ZiBMoD3rhdHzd9HUm3/gTpVEEFLzO');              //On le compare avec notre chaine de caractère de sécurité
         const userId = decodedToken.userId;
 

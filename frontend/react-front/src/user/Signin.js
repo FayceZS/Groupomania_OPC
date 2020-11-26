@@ -73,7 +73,7 @@ class Signin extends Component {
                                                                 <h1>Groupomania</h1>
                 <h2 className="mt-5 mb-5">Connectez-vous :</h2>
 
-                    <form id="formulaireCommande" method="POST">
+                    <form id="signinForm" method="POST">
                         
 
                         <div className="form-group">

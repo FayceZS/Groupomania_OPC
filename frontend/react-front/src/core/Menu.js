@@ -16,9 +16,9 @@ const Menu = ({history}) => (
         <ul className="nav nav-pills nav-fill ">
             
                 <li className="nav-item">
-                     <div className="nav-link font-weight-bold text-lg-right" >   
+                     {/* <div className="nav-link font-weight-bold text-lg-right" >    */}
                         <Link className="nav-link font-weight-bold text-lg-right" style ={isActive(history,"/")} to='/' id="accueil" ><p>Accueil</p></Link>
-                     </div> 
+                     {/* </div>  */}
                 </li>
 
                 
@@ -28,15 +28,15 @@ const Menu = ({history}) => (
                     <div id="Unauthenticated">
                         
                             <li className="nav-item">
-                                <div className="nav-link font-weight-bold text-lg-right" >
+                                
                                     <Link className="nav-link font-weight-bold text-lg-center" style ={isActive(history,"/signin")} to='/signin' ><p className = "">Se connecter</p></Link>
-                                </div>  
+                               
                             </li>
 
                             <li className="nav-item">
-                                <div className="nav-link font-weight-bold text-lg-right" >
+                                
                                     <Link className="nav-link font-weight-bold text-lg-center" style ={isActive(history,"/signup")} to='/signup' ><p>S'inscrire</p></Link>
-                                </div>  
+                               
                             </li>
                           
                       </div>      
@@ -45,22 +45,28 @@ const Menu = ({history}) => (
                 {isAuthenticated() &&(
                     <>
                         <li className="nav-item">
-                            <div className="nav-link font-weight-bold text-lg-right" >
+                            
                                 <Link className="nav-link font-weight-bold text-lg-right" style ={isActive(history,"/")} to='/users' id="accueil" ><p>Collègues</p></Link>
-                            </div> 
+                            
                         </li>
+
+                        {/* <li className="nav-item">
+                            
+                                <Link className="nav-link font-weight-bold text-lg-right" style ={isActive(history,"/")} to='/post/createpost' id="createpost" ><p>Publications</p></Link>
+                            
+                        </li> */}
                         
                         <li className="nav-item">
-                            <div className="nav-link font-weight-bold text-lg-right" >
+                            
                                 <Link className="nav-link font-weight-bold text-lg-right" to = {`/user/${isAuthenticated().userId}`} style = {isActive(history,`/user/${isAuthenticated().userId}`)}><p className = "" >{(JSON.parse(localStorage.getItem('jwt'))).prenom}</p></Link>
                                 
-                             </div>
+                             
                          </li>
 
                         <li className="nav-item">
-                            <div className="nav-link font-weight-bold text-lg-right" >
+                            
                                 <Link className="nav-link font-weight-bold text-lg-right" to = '' style ={isActive(history,"/signup")} onClick={()=>signOut(()=>{history.push('/')})}><p>Deconnexion</p></Link>
-                            </div>
+                           
                         </li>
                     </>
                 )}

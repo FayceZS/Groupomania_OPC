@@ -1,7 +1,5 @@
 const express = require('express');
 const mysql = require ('mysql'); 
-// import {user} from '../models/user';
-// const User = require('../models/user');
 const bCrypt = require('bcrypt');                           //On va utiliser bcrypt pour crypter le mot de passe de l'utilisateur
 const jwt = require('jsonwebtoken');
 const {user} = require('../models');
@@ -52,15 +50,6 @@ exports.deleteThisUser = (req,res,next) => {
 
 exports.modifyThisUser = (req, res, next) => {
 
-  //console.log(`${req.protocol}://${req.get('host')}/images/${req.file.filename}`);
-  
-  
-  // const userUpdated = req.file ?
-  // {
-  //   ...JSON.parse(req.body),
-  //   imageUrl : `${req.protocol}://${req.get('host')}/image/${req.file.filename}`
-    
-  // } : {...req.body };
   const userUpdated = req.body;
   const userID = req.params.id;
   console.log(` ID requête : ${req.params.id}`);

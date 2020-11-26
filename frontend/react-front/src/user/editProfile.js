@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {isAuthenticated} from '../auth/index';
-import {read,update} from './apiUser';
+import {read,update,updateUser} from './apiUser';
 import {Redirect} from 'react-router-dom';
 
 class EditProfile extends Component {
@@ -43,7 +43,7 @@ class EditProfile extends Component {
 
     componentDidMount() {
         this.userData = new FormData()
-        const userId = this.props.match.params.userId;
+        const userId = isAuthenticated().userId;
         this.init(userId);
         
 
@@ -110,10 +110,12 @@ class EditProfile extends Component {
         .then(data =>{
                 if(data.error) this.setState( {error : data.error});
                 else
-                    this.setState({
+                    updateUser(data, ()=>{
+                        this.setState({
                         
-                        redirectToProfile : true
-                        
+                            redirectToProfile : true
+                            
+                        });
                     })
             });
 

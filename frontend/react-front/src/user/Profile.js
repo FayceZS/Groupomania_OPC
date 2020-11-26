@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import { Redirect, Link } from 'react-router-dom';
 import {isAuthenticated} from '../auth/index';
-import {read} from './apiUser';
-import Defaultimage from "../images/avatar.png";
+import {read,updateUser} from './apiUser';
 import DeleteUser from './deleteUser';
 
 
@@ -12,7 +11,8 @@ class Profile extends Component{
         super()
         this.state = {
             user : "",
-            redirectToSignin : false
+            redirectToSignin : false,
+            error : ''
 
         }
     }
@@ -66,7 +66,12 @@ class Profile extends Component{
         const {redirectToSignin, user} = this.state;
 
         if(redirectToSignin) return <Redirect to="signin"/>;
-
+        updateUser(user,()=>{
+            console.log('Utilisateur mis à jour')
+            
+                
+        }
+        );
         
         return(
 

@@ -3,11 +3,20 @@ body {
     height : 100%;
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
+    padding-top: 110px;
+    background: #f9f9f9 
 }
 
 #root{
     width : 100%;
     
+}
+
+#signinForm{
+    background-color: white;
+    padding : 20px;
+    border : 1px solid black
 }
 
 
@@ -16,12 +25,40 @@ body {
     padding : 20px;
 }
 
-.nav-fill {                                                     /*CSS concernant le menu de navigation*/
+
+                                                    /*CSS concernant le menu de navigation*/
+
+.nav {
+    position : fixed;
+    width : 100%;
+    top : 0px;
+    right : 0px;
+    height : 110px;
+    font-size : 15px;
+    z-index: 1;
+}                                                  
+
+.nav-fill {                                                     
+
+
     background: #283048;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #859398, #283048);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #859398, #283048); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: -webkit-linear-gradient(to right, #859398, #283048);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #859398, #283048); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 
+}
+
+.nav-item{
+    width : auto;
+    height : 100%;
+}
+
+.nav-item>a {
+    padding : 0px;
+}
+
+.nav-link {
+    padding : 0px;
 }
 
 .nav-link p{
@@ -42,10 +79,76 @@ background: linear-gradient(to right, #859398, #283048); /* W3C, IE 10+/ Edge, F
     display: flex;  
 }
 
-#accueil{                               /*CSS concernant la page d'accueil*/
-    
+
+.container>h2{
+    margin : 0px;
+}
+
+
+.jumbotron-fluid{                               /*CSS concernant la page d'accueil*/
+    width : 75%;
+    height : 400px;
+    display : flex;
+    flex-direction : column;
+    margin : auto;
+    margin-bottom: 15px;
+    padding : 20px;
+    background-color: white;
+    border-radius : 12px;
+    box-shadow: 0 10px 10px -5px;
     
 }
+
+#postImg{
+    width : 70%;
+    height : 45%;
+    border : 1px solid black;
+    align-self: center;
+}
+
+#goPost {
+    width : 45%;
+    align-self: center;
+}
+
+#postsDetails{
+    display : flex;
+    height : 30px;
+    justify-content: space-between;
+}
+
+.homeContainer {
+    display : flex;
+    
+}
+
+.postContainer {
+    width : 150px;
+    height : 400px;
+    border : 1px solid black;
+    padding : 20px;
+    background-color: white;
+    display : flex;
+    margin-top : 25px;
+   flex-direction: column; 
+   position : fixed;
+   overflow : hidden;
+   box-shadow: 5px 5px 20px;
+   z-index: 1;
+   transition: 1s;
+}
+
+.postContainer:hover{
+    width : 80%;
+}
+
+.postContainer>h2 {
+    margin : 0;
+    font-size: 15px;
+    display : none;
+}
+
+
 
 #nameUser  {                            /*CSS concernant la page contenant tout les utilisateurs*/ 
     text-decoration: none;
@@ -61,6 +164,24 @@ background: linear-gradient(to right, #859398, #283048); /* W3C, IE 10+/ Edge, F
     flex-direction: column;
     flex-wrap: wrap;
     padding : 0px;
+}
+
+.container-fluid {
+    padding : 10px;
+}
+
+.publicationContainer{
+    width : 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+
+}
+
+.publicationContainer>.jumbotron{
+    height : 400px;
+    margin-bottom: 20px;
 }
 
 .row{
@@ -103,6 +224,12 @@ background: linear-gradient(to right, #859398, #283048); /* W3C, IE 10+/ Edge, F
     flex-direction: column;
 }
 
+.card-text{
+    max-width: 200px;
+    overflow-wrap: normal;
+    height : auto;
+}
+
 #card-bodyContent{
     margin : auto;
 }
@@ -111,4 +238,29 @@ background: linear-gradient(to right, #859398, #283048); /* W3C, IE 10+/ Edge, F
     width : 50%;
     margin : auto;
     margin-bottom : 20px;
+}
+
+
+                                    /*CSS pour la page d'une publication*/
+
+#singlePostImg {
+    max-width: 500px;
+    max-height : 500px
+}
+
+.publicationContainer{
+    width : 80%;
+    margin : auto;
+    background-image: url('./images/icon-left-font-monochrome-black.png') no-repeat;
+    box-shadow: 0 10px 10px -5px;
+    padding : 5px 20px 20px 20px;
+    margin-top : 30px;
+    display:flex;
+    flex-direction: column;
+
+}
+
+#goHomeFromSinglePost {
+    margin : auto;
+    margin-bottom : 15px;
 }

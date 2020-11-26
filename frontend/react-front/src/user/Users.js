@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { list } from "./apiUser";
 import { isAuthenticated } from "../auth/index";
-import Defaultimage from "../images/avatar.png";
 import { Link } from "react-router-dom";
 
 class Users extends Component {

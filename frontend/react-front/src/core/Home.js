@@ -43,15 +43,15 @@ class Home extends Component {
     componentDidMount() {
         
         
-        this.init(isAuthenticated().userId);
+        this.init(isAuthenticated().user.id);
         
 
         
     };
 
-    componentWillReceiveProps(props) {
+    componentWillReceiveProps() {
         
-        const userId = props.match.params.userId;
+        const userId = isAuthenticated().user.id;
         this.init(userId);
         
 

@@ -42,18 +42,18 @@ class Home extends Component {
 
     componentDidMount() {
         
-        
+        if(isAuthenticated().user){
         this.init(isAuthenticated().user.id);
-        
+        }
 
         
     };
 
     componentWillReceiveProps() {
-        
+        if(isAuthenticated().user){
         const userId = isAuthenticated().user.id;
         this.init(userId);
-        
+        }
 
         
     };

@@ -6,10 +6,22 @@ const bodyParser = require('body-parser');          //On va utiliser bodyParser 
 const path = require('path');                     //On utilise le module path pour gérer nos fichiers en l'occurence nos images
 const multer = require('multer');
 const commentsRoutes = require('./routes/comments');
+const helmet = require('helmet');                 //On utilise helmet pour sécuriser les données headers
+const rateLimit = require("express-rate-limit");        //On utilise express rate limit pour prévenir les attaques bruteforce
+const xss = require('xss-clean');                        //On utilise le plugin xss-clean pour contrer les failles xss
 
 
 
+const limiter = rateLimit({                                   //On programme un limiter pour pallier aux attaques bruteforce
+  windowMs: 15 * 60 * 1000, // 15 minutes 
+  max: 100 // limite chaque IP à 100 requests par windowMs
+});
 
+
+
+app.use(limiter);
+
+app.use(xss());
 
 
 
@@ -21,8 +33,7 @@ const commentsRoutes = require('./routes/comments');
   next();
 }); 
 
-// app.use(upload.array()); 
-// app.use(express.static('public'));
+app.use(helmet());
 
 app.use(bodyParser.json()); 
 

@@ -46,9 +46,10 @@ class Comments extends Component {
                 if(data.error){
                     console.log(data.error)
                 }else{
-                    this.setState({test:""});
+                    this.setState({text:""});
                     console.log(data.commentaire);
                     this.props.updateComments(data.commentaire);
+                    window.location.reload();
                 }
             })
     }
@@ -95,7 +96,7 @@ class Comments extends Component {
 
     render() {
 
-        const{commentaires} = this.state;
+        const{commentaires,text} = this.state;
         
 
         return (

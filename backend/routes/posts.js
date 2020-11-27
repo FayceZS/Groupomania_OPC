@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const postsCtrl = require("../controlers/posts");
 const multer = require('../middlewares/multer-config-post');
+const auth = require('../middlewares/auth');
 
 router.get('/getAllPosts',postsCtrl.getAllPosts);
 router.get('/:id',postsCtrl.getThisPost);

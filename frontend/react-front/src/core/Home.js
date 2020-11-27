@@ -11,9 +11,7 @@ class Home extends Component {
     super()
     this.state = {
         
-        user : {
-
-        },
+        user : "",
         loading : false,
         error : ''
 
@@ -46,6 +44,15 @@ class Home extends Component {
         
         
         this.init(isAuthenticated().userId);
+        
+
+        
+    };
+
+    componentWillReceiveProps(props) {
+        
+        const userId = props.match.params.userId;
+        this.init(userId);
         
 
         

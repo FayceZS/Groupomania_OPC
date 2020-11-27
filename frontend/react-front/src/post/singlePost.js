@@ -114,7 +114,7 @@ class SinglePost extends Component {
             <div id="postsDetails">
               {console.log(post.createdAt)}
               {/* <p>{post.createdAt.substring(0,10).split()}</p> */}
-              <p id='datePostSingle'>{post.createdAt}</p>
+              <p id='datePostSingle'>{post.createdAt.substring(0,10).split()}</p>
               <p id='auteurPostSingle'>Auteur : {post.auteur}</p>
             </div>
          
@@ -151,7 +151,7 @@ class SinglePost extends Component {
         return (
             <div>
                 
-                {this.renderPost(post)}
+                {this.state.post ? this.renderPost(post) : ""}
                 
                 {
                             this.state.editing ? <EditPost/> : ""

@@ -43,7 +43,7 @@ class Posts extends Component {
                 <h5 className="card-title">
                   {post.titre}
                 </h5>
-                <p className="card-text">{post.Texte.substring(0,35)}....</p>
+                <p className="card-text">{post.Texte.length > 35 ? `${post.Texte.substring(0,35)}...`: post.Texte}</p>
                 
               </div>
             </div>

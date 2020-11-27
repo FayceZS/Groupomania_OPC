@@ -10,6 +10,7 @@ import EditProfile from './user/editProfile'
 import PrivateRoute from './auth/privateRoutes'
 import NewPost from './post/newPost'
 import SinglePost from './post/singlePost'
+import EditPost from './post/editPost'
 
 const MainRouter = () => (
 
@@ -19,7 +20,8 @@ const MainRouter = () => (
         <Switch>
             
             <Route exact path='/' component={Home}></Route>
-            <Route exact path='/post/:postId' component={SinglePost}></Route>
+            <PrivateRoute exact path='/post/:postId' component={SinglePost}></PrivateRoute>
+            <PrivateRoute exact path='/post/edit/:postId' component={EditPost}></PrivateRoute>
             <PrivateRoute exact path='/users' component={Users}></PrivateRoute>
             <Route exact path='/signup' component={Signup}></Route>
             <Route exact path='/signin' component={Signin}></Route>

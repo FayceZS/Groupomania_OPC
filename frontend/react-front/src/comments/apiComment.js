@@ -1,16 +1,19 @@
-export const create = (userId,token,publication) => {
-    
-    publication.set('userId',userId);
 
-   return  fetch(`${process.env.REACT_APP_API_URL}/posts/createpost`,{
+
+export const createComment = (userId,token,commentaire) => {
+    
+    
+
+   return  fetch(`${process.env.REACT_APP_API_URL}/comments/createComment`,{
         method : 'POST',
         headers : {
             Accept : "application/json",
+            "Content-type" : "application/json",
             Authorization : `Bearer ${token}`,
             
 
         },
-        body : publication
+        body : JSON.stringify(commentaire)
     })
         .then(response =>{
         
@@ -21,8 +24,24 @@ export const create = (userId,token,publication) => {
 }
 
 
-export const list = (token)=>{
-    return  fetch(`${process.env.REACT_APP_API_URL}/posts/getAllPosts`,{
+export const getCommentsOfPost = (token,idPost)=>{
+    return  fetch(`${process.env.REACT_APP_API_URL}/comments/getAllcomments/${idPost}`,{
+        method : 'GET',
+        headers : {
+            Accept : "application/json",
+            "Content-type" : "application/json",
+            Authorization : `Bearer ${token}`
+        },
+        
+    })
+        .then(response =>{
+        
+        return response.json();})
+        .catch(error => console.log(error));       
+ }
+
+ export const singleComment = (token,commentId)=>{
+    return  fetch(`${process.env.REACT_APP_API_URL}/comments/${commentId}`,{
         method : 'GET',
         headers : {
             Accept : "application/json",
@@ -36,23 +55,8 @@ export const list = (token)=>{
         .catch(error => console.log(error));       
  }
 
- export const singlePost = (token,postId)=>{
-    return  fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`,{
-        method : 'GET',
-        headers : {
-            Accept : "application/json",
-            "Content-type" : "application/json",
-            Authorization : `Bearer ${token}`
-        }
-    })
-        .then(response =>{
-        
-        return response.json();})
-        .catch(error => console.log(error));       
- }
-
- export const remove = (postId,token) => {
-    return  fetch(`${process.env.REACT_APP_API_URL}/posts/${postId}`,{
+ export const removeComment = (commentId,token) => {
+    return  fetch(`${process.env.REACT_APP_API_URL}/comments/${commentId}`,{
          method : 'DELETE',
          headers : {
              Accept : "application/json",
@@ -70,11 +74,11 @@ export const list = (token)=>{
 
  
 
-export const updatePost = (userId,token,publication) => {
+export const updatePost = (userId,token,comment) => {
     
-    publication.set('userId',userId);
+    comment.set('userId',userId);
 
-   return  fetch(`${process.env.REACT_APP_API_URL}/posts/${publication.id}`,{
+   return  fetch(`${process.env.REACT_APP_API_URL}/comments/${comment.id}`,{
         method : 'PUT',
         headers : {
             Accept : "application/json",
@@ -82,7 +86,7 @@ export const updatePost = (userId,token,publication) => {
             
 
         },
-        body : publication
+        body : comment
     })
         .then(response =>{
         

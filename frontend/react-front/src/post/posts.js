@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { list } from "../post/apiPost";
 import { isAuthenticated } from "../auth/index";
 import { Link } from "react-router-dom";
-import {read} from '../user/apiUser';
 
 
 
@@ -44,7 +43,7 @@ class Posts extends Component {
                 <h5 className="card-title">
                   {post.titre}
                 </h5>
-                <p className="card-text">{post.Texte.substring(0,35)}</p>
+                <p className="card-text">{post.Texte.substring(0,35)}....</p>
                 
               </div>
             </div>
@@ -53,10 +52,13 @@ class Posts extends Component {
             </Link>
             <div id="postsDetails">
 
-              <p>{post.createdAt.substring(0,10).split()}</p>
-              <p>{console.log(post.createdAt.substring(0,10).split())}</p>
-              <p>Auteur : {post.auteur}</p>
+              <p id = "datePost">{post.createdAt.substring(0,10).split()}</p>
+              {/* <p>{console.log(post.createdAt.substring(0,10).split())}</p> */}
+              
+              <p id='authorPost'>Auteur : {post.auteur}</p>
             </div>
+            
+
         </div> 
 
         
@@ -70,9 +72,8 @@ class Posts extends Component {
   );
 
   render() {
-    const { posts,authors } = this.state;
+    const { posts} = this.state;
     
-    console.log(posts);
     return (
       <div className="container" >
         

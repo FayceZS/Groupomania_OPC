@@ -4,7 +4,8 @@ const userRoutes = require('./routes/user');
 const postsRoutes = require('./routes/posts')
 const bodyParser = require('body-parser');          //On va utiliser bodyParser pour parser les requêtes json et s'en servir directement comme des objets javascript
 const path = require('path');                     //On utilise le module path pour gérer nos fichiers en l'occurence nos images
-const multer = require('multer')
+const multer = require('multer');
+const commentsRoutes = require('./routes/comments');
 
 
 
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 app.use('/auth',userRoutes);
 app.use('/user',userRoutes);
 app.use('/posts',postsRoutes);
+app.use('/comments',commentsRoutes);
 app.use('/image', express.static(path.join(__dirname,'images')));         //On rend l'application statique pour gérer les images
 
 

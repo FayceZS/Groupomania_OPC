@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Posts from '../post/posts';
 import { isAuthenticated } from "../auth/index";
 import NewPost from '../post/newPost';
-import PrivateRoute from '../auth/privateRoutes'
+import {read} from '../user/apiUser';
+import Signin from '../user/Signin';
 
 class Home extends Component {
 
@@ -18,12 +19,45 @@ class Home extends Component {
 
 
     }}
+
+
+
+    init = userId => {
+
+        const token = isAuthenticated().token;
+
+            read(userId,token)
+            .then(data => {
+            if(data.error){
+                this.setState({redirectToSignin : true})
+            } else{
+                
+                this.setState({user : data})
+                
+            }
+
+        })
+
+    }
+
+    
+
+    componentDidMount() {
+        
+        
+        this.init(isAuthenticated().userId);
+        
+
+        
+    };
+
+    
     
 
 
 render(){
     
-    const {user,loading,error,} = this.state;
+    const {user} = this.state;
     
     return(
     <div className = "homeContainer">
@@ -31,9 +65,10 @@ render(){
          
         
            {!isAuthenticated() && (
-            <div className="jumbotron">
+            <div className="jumbotron" id="accueilDisconnect">
                 <h2>Accueil</h2>
-                <p className="lead">Connectez-vous pour voir les publications</p>
+                
+                <Signin/>
             </div>
             )}         
 

@@ -83,9 +83,9 @@ exports.createPost = (req,res,next) => {
 }
 
 exports.deleteThisPost = (req,res,next) => {
-
+    
     publication.destroy(
-        {where : {id: req.body.id}}
+        {where : {id: req.params.id}}
       ).then(
         (user) => {
           res.status(200).json(user);
@@ -106,9 +106,9 @@ exports.deleteThisPost = (req,res,next) => {
     const postUpdated = req.body;
     if(req.file){
         const updatePost = ()=>{
-        publication.update({Texte : postUpdated.texte}, {where : { id : postUpdated.id}})
+        publication.update({Texte : postUpdated.Texte}, {where : { id : postUpdated.id}})
         publication.update({titre : postUpdated.titre}, {where : { id : postUpdated.id}})
-        publication.update({ImageSource : `${req.protocol}://${req.get('host')}/image/${req.file.filename}`}, {where : { id : userID}})
+        publication.update({ImageSource : `${req.protocol}://${req.get('host')}/image/${req.file.filename}`}, {where : { id : postUpdated.id}})
         .then(() => {res.status(201).json({message: 'Publication bien modifié' });})
         .catch(()=>{res.status(400).json({error : "Le profil n'a pas était rempli correctement"})});
         }
@@ -117,7 +117,7 @@ exports.deleteThisPost = (req,res,next) => {
     
         } else {
           const updatePost = ()=>{
-            publication.update({Texte : postUpdated.texte}, {where : { id : postUpdated.id}})
+            publication.update({Texte : postUpdated.Texte}, {where : { id : postUpdated.id}})
             publication.update({titre : postUpdated.titre}, {where : { id : postUpdated.id}})
             .then(() => {res.status(201).json({message: 'Publication bien modifié' });})
             .catch(()=>{res.status(400).json({error : "Le profil n'a pas était rempli correctement"})});

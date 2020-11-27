@@ -176,7 +176,7 @@ class NewPost extends Component {
 
 
         return (
-            <div className = "postContainer">
+            <div className = "postContainer" id='homePost'>
                 
                 <h2 className = "mt-5 mb-5">Créer un nouveau post :</h2>
 

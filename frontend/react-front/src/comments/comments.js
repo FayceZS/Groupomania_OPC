@@ -8,13 +8,18 @@ class Comments extends Component {
 
     state = {
         text : "",
-        commentaires : []
+        commentaires : [],
+        deleted : false,
+        showDelete : false
     }
 
+    
+    
     componentDidMount = ()=>{
+        
         getCommentsOfPost(isAuthenticated().token,document.location.href.split('/').pop())
         .then(data => {
-            if(data.error){
+            if(data.error && data != undefined){
                 console.log(data.error)
             }else{
                 this.setState({commentaires : data});
@@ -27,13 +32,39 @@ class Comments extends Component {
         this.setState({text : event.target.value})
     }
 
+    deleteComment = (idToDelete)=>{
+        
+        const token = isAuthenticated().token;
+        removeComment(idToDelete,token).then(data =>{
+            if(data.error){
+                console.log(data.error)
+            }else{
+                this.setState({deleted : true})
+                
+            }
+        })
+    }
+
+    
+
+   deleteConfirmed = (commentaires,i) => {
+        
+       const idToDelete = commentaires[i].id;
+        
+        let answer = window.confirm("Etes-vous sûr de vouloir supprimer votre commentaire ? ");
+        
+         if(answer){
+            this.deleteComment(idToDelete)
+        }
+    }
+
     addComment = e => {
             e.preventDefault()
             const userId = isAuthenticated().userId;
             const token = isAuthenticated().token;
             const postId = this.props.postId;
             const comment = this.state.text;
-            const auteur = `${isAuthenticated().user.prenom} ${isAuthenticated().user.nom}`;
+            const auteur = `${isAuthenticated().prenom} ${isAuthenticated().nom}`;
             const commentToSend = {
                 user_id : userId,
                 Texte : comment,
@@ -55,7 +86,11 @@ class Comments extends Component {
     }
 
 
-    
+    deleteIcon = (commentaires,i)=>{
+        if(isAuthenticated().type === 'admin' || isAuthenticated().userId === this.commentaires[i].user_id){
+            this.setState({showDelete : true})
+        }
+    }   
     
     
 
@@ -71,22 +106,36 @@ class Comments extends Component {
             
             <div
               className="commentContainer"
+              
               key={i}
             >
-              
-              
+
+                   
+                    
+
+
+                    
+                    
+                    
+
+                   {isAuthenticated() && isAuthenticated().userId === comment.user_id && <> <button onClick={this.deleteConfirmed.bind(this,commentaires,i)} className='fas fa-trash w3-xlarge w3-text-red commentIcon'></button></>}
+                   {isAuthenticated().type === 'moderator' && isAuthenticated().userId != comment.user_id && <> <i className='fas fa-trash w3-xlarge w3-text-red commentIcon' onClick = {this.deleteConfirmed.bind(this,commentaires,i)}></i></>}
+                   {isAuthenticated().type === 'admin' && isAuthenticated().userId != comment.user_id && <> <button onClick={this.deleteConfirmed.bind(this,commentaires,i)} className='fas fa-trash w3-xlarge w3-text-red commentIcon'></button></>}
                     <p className="commentText">{comment.Texte}</p>
                     <p className="commentAuteur">
                       Auteur : {comment.auteur}
                     </p>
+                    {/* <>{console.log('on est là' + idCommentDelete)}</> */}
+
+                    
                     
                   
                
                 
-              
+               
             </div> 
     
-    
+         
           ))
           
           
@@ -94,9 +143,21 @@ class Comments extends Component {
         </div>
       );
 
+   deleteIcon = (commentaires,i)=>{
+        if(isAuthenticated().type === 'admin' || isAuthenticated().userId === this.commentaires[i].user_id){
+            this.setState({showDelete : true})
+        }
+    }
+
     render() {
 
-        const{commentaires,text} = this.state;
+        const{commentaires,text,deleted,showDelete} = this.state;
+
+        if(deleted){
+            window.location.reload();
+        }
+
+        
         
 
         return (
@@ -104,11 +165,13 @@ class Comments extends Component {
                 <h2 className = "mt-5 mb-5">Laisser un commentaire</h2>
                 <form onSubmit = {this.addComment}>
                     <div className='form-group'>
+                    
                         <input type = "text" onChange = {this.handleChange} className="form-control" id="commentInput" placeholder="Ecrivez un commentaire"/>
                     </div>
                 </form>
 
                 {this.renderComments(commentaires)}
+                
             </div>
 
             

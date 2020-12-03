@@ -52,7 +52,7 @@ class Profile extends Component{
 
     componentWillReceiveProps(props) {
         
-        const userId = props.match.params.userId;
+        const userId = isAuthenticated().userId;
         this.init(userId);
         
 
@@ -77,9 +77,9 @@ class Profile extends Component{
 
         
         
-        <div className = 'container'>
+        <div className = 'container uniqueProfilContainer'>
 
-            <h2 className = "mt-5 mb-5">Profil</h2>
+            
             <div className="row">
                     <div className = "col-md-6">
                             
@@ -94,13 +94,14 @@ class Profile extends Component{
                                         <div className = "lead mt-2 ">
                                             <p> {user.prenom} {user.nom}</p>
                                             <p>{`Fonction : ${user.fonction}`}</p>
+                                            
                                         </div>
 
-                        {isAuthenticated() && isAuthenticated().userId === user.id &&(
+                        {isAuthenticated() && isAuthenticated().userId === user.id  &&(
 
                             
                                     <div>
-                                        <Link className = "btn btn-raised ml-5" to= {`/user/edit/${user.id}`}>
+                                        <Link className = "btn btn-raised ml-5 " id="modifyProfilUser" to= {`/user/edit/${user.id}`}>
                                                 Modifier Profil
                                         </Link>
                                         <DeleteUser userId = {user.id} />
@@ -110,6 +111,36 @@ class Profile extends Component{
                         )
 
                         }  
+
+                        {isAuthenticated().type == "moderator"&&isAuthenticated() && isAuthenticated().userId != user.id  &&(
+
+                                                    
+                        <div>
+                            <Link className = "btn btn-raised ml-5 " id="modifyProfilUser" to= {`/user/edit/${user.id}`}>
+                                    Modifier Profil
+                            </Link>
+                            <DeleteUser userId = {user.id} />
+                        </div>
+
+
+                        )
+
+                        }  
+
+                            {isAuthenticated().type == "admin"&&isAuthenticated() && isAuthenticated().userId != user.id  &&(
+
+                                                                                
+                            <div>
+                                <Link className = "btn btn-raised ml-5 " id="modifyProfilUser" to= {`/user/edit/${user.id}`}>
+                                        Modifier Profil
+                                </Link>
+                                <DeleteUser userId = {user.id} />
+                            </div>
+
+
+                            )
+
+                            }  
 
                         </div>
                     </div>

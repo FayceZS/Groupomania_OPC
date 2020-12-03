@@ -3,7 +3,7 @@ const post = require('../models/publication');
 
 const MIME_TYPES = {                //On définie les extensions qui seront acceptées pour nos images
     'image/jpg' : 'jpg',
-    'image/jpeg' : 'jpg',
+    'image/jpeg' : 'jpeg',
     'image/png' : 'png',
     'image/gif' : 'gif'
 };

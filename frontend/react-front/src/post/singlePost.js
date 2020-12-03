@@ -83,28 +83,59 @@ class SinglePost extends Component {
           
           <div className="card-body">
               <div id="card-bodyContent">
+                <img className="card-img-top" id="singlePostImg" src={post.ImageSource} alt={post.titre}  />  
                 <h5 className="card-title">
                   {post.titre}
                 </h5>
-                <img className="card-img-top" id="singlePostImg" src={post.ImageSource} alt={post.titre}  />
+                
                 <p className="card-text">{post.Texte}</p>
                 
               </div>
             </div>
             <div className="publicationButtons">
-                <Link to={`/`} className="btn btn-raised btn-primary btn-small mr-5" id="goHomeFromSinglePost">
-                Retourner à l'accueil
+                <Link to={`/`} className="btn btn-raised btn-primary btnEditPost" id="goHomeFromSinglePost">
+                <i className='fas fa-warehouse w3-xlarge w3-text-white'></i>   Accueil
                 </Link>
 
                 {isAuthenticated() && isAuthenticated().userId === post.idUser &&
                 <>
 
-                    <button onClick = {this.isEditing} className = 'btn btn-raised btn-warning '>
-                        Modifier le post
+                    <button onClick = {this.isEditing} className = 'btn btn-raised btn-warning btnEditPost'>
+                    <i class='far fa-address-card w3-xlarge w3-text-white'></i>   Modifier le post
                     </button>
 
-                    <button onClick = {this.deleteConfirmed} className = 'btn btn-raised btn-danger '>
-                        Supprimer le post
+                    <button onClick = {this.deleteConfirmed} className = 'btn btn-raised btn-danger btnEditPost'>
+                    <i className='fas fa-trash w3-xlarge w3-text-white'></i>   Supprimer le post
+                    </button>
+
+                </>
+
+            }
+
+            {isAuthenticated().type == 'admin' && isAuthenticated() && isAuthenticated().userId != post.idUser&&
+                <>
+
+                    <button onClick = {this.isEditing} className = 'btn btn-raised btn-warning btnEditPost'>
+                    <i class='far fa-address-card w3-xlarge w3-text-white'></i>   Modifier le post
+                    </button>
+
+                    <button onClick = {this.deleteConfirmed} className = 'btn btn-raised btn-danger btnEditPost'>
+                    <i className='fas fa-trash w3-xlarge w3-text-white'></i>  Supprimer le post
+                    </button>
+
+                </>
+
+            }
+
+            {isAuthenticated().type == 'moderator'&& isAuthenticated() && isAuthenticated().userId != post.idUser &&
+                <>
+
+                    <button onClick = {this.isEditing} className = 'btn btn-raised btn-warning btnEditPost'>
+                    <i class='far fa-address-card w3-xlarge w3-text-white'></i> Modifier le post
+                    </button>
+
+                    <button onClick = {this.deleteConfirmed} className = 'btn btn-raised btn-danger btnEditPost'>
+                    <i className='fas fa-trash w3-xlarge w3-text-white'></i>   Supprimer le post
                     </button>
 
                 </>

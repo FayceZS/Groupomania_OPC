@@ -4,6 +4,7 @@ import { isAuthenticated } from "../auth/index";
 import NewPost from '../post/newPost';
 import {read} from '../user/apiUser';
 import Signin from '../user/Signin';
+import Signup from '../user/Signup';
 
 class Home extends Component {
 
@@ -13,7 +14,7 @@ class Home extends Component {
         
         user : "",
         loading : false,
-        error : ''
+        error : '',
 
 
     }}
@@ -27,7 +28,7 @@ class Home extends Component {
             read(userId,token)
             .then(data => {
             if(data.error){
-                this.setState({redirectToSignin : true})
+                console.log(data.error)
             } else{
                 
                 this.setState({user : data})
@@ -73,9 +74,10 @@ render(){
         
            {!isAuthenticated() && (
             <div className="jumbotron" id="accueilDisconnect">
-                <h2>Accueil</h2>
+                
                 
                 <Signin/>
+                <Signup/>
             </div>
             )}         
 

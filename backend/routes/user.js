@@ -4,11 +4,11 @@ const userCtrl = require('../controlers/user');            //On appelle les midd
 const auth = require('../middlewares/auth');
 const multer = require('../middlewares/multer-config');
 
-router.post("/signup",userCtrl.signup);             //On appelle les fonctions appropriées à nos routes
+router.post("/signup",multer,userCtrl.signup);             //On appelle les fonctions appropriées à nos routes
 router.post('/signin',userCtrl.signin);
 router.get('/signout',userCtrl.signout);
 router.get('/getAllUsers',auth,userCtrl.getAllUsers);
-router.delete('/:id',auth,userCtrl.deleteThisUser);
+router.delete('/:id',userCtrl.deleteThisUser);
 router.get('/:id',auth,userCtrl.getThisUser);
 router.put('/:id',multer,auth, userCtrl.modifyThisUser)
 

@@ -5,6 +5,8 @@ import {Redirect} from 'react-router-dom';
 import Posts from './posts';
 import {read} from '../user/apiUser';
 
+const formContainer = document.querySelector(".formContainer");
+
 class NewPost extends Component {
 
     constructor(){
@@ -46,9 +48,10 @@ class NewPost extends Component {
     
 
     componentDidMount() {
+        this.setState({user : {id : isAuthenticated().userId,prenom : isAuthenticated().prenom,}});
         const userId = isAuthenticated().userId;
         this.init(userId);
-        this.setState({user : isAuthenticated().user});
+        
         this.postData = new FormData();
 
         
@@ -76,7 +79,7 @@ class NewPost extends Component {
         
         const value = name === 'image' ? event.target.files[0] : event.target.value
         this.postData.set("userId",isAuthenticated().userId);
-        this.postData.set('auteur',`${isAuthenticated().user.prenom} ${isAuthenticated().user.nom}` )
+        this.postData.set('auteur',`${isAuthenticated().prenom} ${isAuthenticated().nom}` )
         this.postData.set(name,value);
         this.setState({ [name] : value});
     };
@@ -94,7 +97,7 @@ class NewPost extends Component {
                     auteur
                     
                 };  
-        const userId = isAuthenticated().user.id;
+        const userId = isAuthenticated().userId;
         const token = isAuthenticated().token;
         create(userId,token, this.postData)
         .then(data =>{
@@ -108,7 +111,7 @@ class NewPost extends Component {
     }
 
     newPostForm = (titre,Texte,idUser,auteur)=>(
-        <form>
+        <form className='formContainer'>
 
                         
 
@@ -165,6 +168,7 @@ class NewPost extends Component {
 
         const {titre,Texte,user,error,redirectToHome,auteur} = this.state;
         const idUser = isAuthenticated().userId;
+        
         if(redirectToHome){
 
         
@@ -185,13 +189,16 @@ class NewPost extends Component {
                             style = {{display : error ? "" : "none"}}>
 
                                 {error}
+                                
                     </div>
 
                     
-
+                
                 {this.newPostForm(titre,Texte,idUser,auteur)}
             </div>
         );
+        
+
     }
 }
 

@@ -3,15 +3,14 @@
 
 export const signup = user => {
 
-    console.log(process.env.REACT_APP_API_URL) ;    
+    
          
     return    fetch(`${process.env.REACT_APP_API_URL}/auth/signup`,{
         method : "POST",
         headers : {
             Accept : "application/json",
-            "Content-type" : "application/json"
         },
-        body: JSON.stringify(user)
+        body: user
     })
     .then(response => {
         

@@ -37,9 +37,9 @@ class Posts extends Component {
           className="jumbotron jumbotron-fluid "
           key={i}
         >
-          <img className="card-img-top" id="postImg" src={post.ImageSource} alt={post.titre}  />
+          <img className="card-img-top postImg" src={post.ImageSource} alt={post.titre}  />
           <div className="card-body">
-              <div id="card-bodyContent">
+              <div  className="card-bodyContentHome">
                 <h5 className="card-title">
                   {post.titre}
                 </h5>

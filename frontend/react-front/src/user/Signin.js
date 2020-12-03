@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 import { signin, authenticate} from '../auth/index';
-
 class Signin extends Component {
 
 
@@ -46,6 +45,7 @@ class Signin extends Component {
                 //authentification
                 authenticate(data,()=>{
                     this.setState({redirectToReferer : true})
+                    
                 })
                 //redirection
                 console.log("Utilisateur connecté");
@@ -96,6 +96,7 @@ class Signin extends Component {
                             style = {{display : error ? "" : "none"}}>
 
                                 {error}
+                                
                         </div>
                         
                         

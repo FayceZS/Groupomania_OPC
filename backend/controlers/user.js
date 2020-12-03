@@ -5,9 +5,7 @@ const jwt = require('jsonwebtoken');
 const {user} = require('../models');
 const Sequelize = require('sequelize');
 const fs = require("fs");
-const formidable = require('formidable');
-const _ = require('lodash');
-
+const {publication} = require('../models')
 
 
 exports.getThisUser = (req,res,next) => {
@@ -32,9 +30,30 @@ exports.getThisUser = (req,res,next) => {
 
 exports.deleteThisUser = (req,res,next) => {
 
-  user.destroy(
-      {where : {id: req.params.id}}
-    ).then(
+  const postsOfThisUser = publication.findAll({where : {idUser : req.params.id}});
+  // console.log(postsOfThisUser);
+  // let thisUser1;
+  // const userToDelete = async ()=>{ thisUser = await user.findOne({where : {id: req.params.id}}); thisUser1 = thisUser.dataValues }
+    
+    
+    
+  
+  // userToDelete()
+  // console.log(thisUser1)
+
+  user.destroy({where : {id: req.params.id}})
+      
+  //fs.unlink(`./images/user${req.params.id}.jpg`,(err=>{
+    //   if(err) console.log(err)
+    //   else {console.log("photo utilisateur supprimé")};
+    // }));
+
+  
+
+  publication.destroy({where : {idUser : req.params.id}})
+
+
+  .then(
       (user) => {
         res.status(200).json(user);
       }
@@ -45,7 +64,7 @@ exports.deleteThisUser = (req,res,next) => {
         });
       }
     )
-    .catch((error) => { res.status(500).json({error: error});});
+  .catch((error) => { res.status(500).json({error: error});});
 }
 
 exports.modifyThisUser = (req, res, next) => {
@@ -138,6 +157,7 @@ exports.modifyThisUser = (req, res, next) => {
 exports.getAllUsers = (req,res,next) => {
     user.findAll()
     .then((users)=>{
+      
       res.send(users)
       
     })
@@ -154,8 +174,13 @@ exports.getAllUsers = (req,res,next) => {
             bCrypt.hash(req.body.password, 10)                          //Grâce à bcrypt on crypte 10 fois le mot de passe de l'utilisateur avant de l'envoyer à la base de données
               
              
-              .then(async hash=>
+          .then(async hash=>
                 
+              {
+                if(req.file){
+                 
+                const createUser = ()=>{
+                  console.log(req.file);
                 user.create(
                   { 
                    prenom : req.body.prenom ,
@@ -164,16 +189,46 @@ exports.getAllUsers = (req,res,next) => {
                    fonction : req.body.fonction,
                    mail : req.body.mail,
                    password : hash,
+                   imageUrl : `${req.protocol}://${req.get('host')}/image/${req.file.filename}`
                    
-                 }
+                 })
+                .then(() => {res.status(201).json({message: 'Utilisateur bien créé' });})
+                //.catch(()=>{res.status(400).json({error : "L'utilisateur n'a pas pu être ajouté"})});
+                .catch(error => {res.status(400).json({error})});
+                }
+            
+                createUser()
+            
+                } else {
+                  
+                  const createUser = ()=>{
+                  user.create(
+                    { 
+                     prenom : req.body.prenom ,
+                     nom : req.body.nom,
+                     sexe : req.body.sexe,
+                     fonction : req.body.fonction,
+                     mail : req.body.mail,
+                     password : hash,
+                    
+                     
+                   })
+                    .then(() => {res.status(201).json({message: 'Utilisateur bien créé' });})
+                    .catch(()=>{res.status(400).json({error : "Le profil n'a pas était rempli correctement"})});
+                  
+                  }
+
+                  createUser();
                 
-                
-                 
-                )
-                .then(() => res.status(201).json({message : "utilisateur crée"}))
-                
-                  )
-          .catch(error => res.status(500).json({error}));   
+                }
+            
+                  
+                })
+          .catch(error => res.status(500).json({error}));       
+                  
+           
+
+          console.log(req.body)
     };
 
     exports.signin = (req,res) => {
@@ -192,7 +247,9 @@ exports.getAllUsers = (req,res,next) => {
                 res.status(200).json({
                     userId : user.id,
                     prenom : user.prenom,
+                    nom : user.nom,
                     mail : user.mail,
+                    type : user.type,
                     token : jwt.sign(
                         {userId : user.id},
                         //'$2b$10$WZrlJ3lvO4jURC4dUM8b5uE7ZiBMoD3rhdHzd9HUm3/gTpVEEFLzO',

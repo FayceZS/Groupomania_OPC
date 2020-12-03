@@ -54,7 +54,7 @@ class EditProfile extends Component {
         const{prenom,nom,mail,fonction,password} = this.state
         if(prenom.length < 2){
             this.setState({error : "Merci d'entrer un prénom valide"});
-            return false
+            return false 
         }
         if(nom.length < 2){
             this.setState({error : "Merci d'entrer un nom valide"});
@@ -83,7 +83,7 @@ class EditProfile extends Component {
     handleChange = name => event => {
         
         const value = name === 'image' ? event.target.files[0] : event.target.value
-        this.userData.set(name,value)
+        this.userData.set(name,value);
         this.setState({ [name] : value});
     };
 

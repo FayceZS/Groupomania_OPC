@@ -35,16 +35,16 @@ class Users extends Component {
           className="card "
           key={i}
         >
-          <img className="card-img-top" id="usersImg" src={user.imageUrl} alt={user.prenom}  />
-          <div className="card-body">
-              <div id="card-bodyContent">
+          <img className="card-img-top usersImg" src={user.imageUrl} alt={user.prenom}  />
+          <div className="card-body card-bodyUsers">
+              <div className="card-bodyContent userDescription">
                 <h5 className="card-title">
                   {user.prenom} {user.nom}
                 </h5>
                 <p className="card-text">{user.fonction}</p>
               </div>
             </div>
-            <Link to={`user/${user.id}`} className="btn btn-raised btn-primary btn-small" id="goProfil">
+            <Link to={`user/${user.id}`} className="btn btn-raised btn-primary btn-small goProfil goProfilUsers" >
               Voir profil
             </Link>
           

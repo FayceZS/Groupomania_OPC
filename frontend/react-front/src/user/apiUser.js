@@ -1,3 +1,6 @@
+import { isAuthenticated } from "../auth/index";
+
+
 export const read = (userId,token) => {
     return  fetch(`${process.env.REACT_APP_API_URL}/user/${userId}`,{
          method : 'GET',
@@ -24,6 +27,7 @@ export const read = (userId,token) => {
              Accept : "application/json",
              Authorization : `Bearer ${token}`
          },
+         
          body : user
      })
          .then(response =>{
@@ -61,7 +65,7 @@ export const read = (userId,token) => {
         }
     })
         .then(response =>{
-        
+        console.log(response);
         return response.json();})
         .catch(error => console.log(error));       
  }

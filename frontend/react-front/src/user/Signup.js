@@ -25,14 +25,53 @@ class Signup extends Component {
         }
     }
 
-    handleChange = name => event => {
+    componentDidMount() {
+        this.userData = new FormData();
         
-        this.setState({error : ""});
-        this.setState({ [name] : event.target.value});
+
+        
     };
+
+    handleChange = name => event => {
+        const value = name === 'image' ? event.target.files[0] : event.target.value;
+        this.userData.set(name,value);
+        this.setState({ [name] : event.target.value});
+        this.setState({error : ""});
+    };
+
+    isValid = () => {
+        const{prenom,nom,mail,fonction,password} = this.state
+        if(prenom.length < 2){
+            this.setState({error : "Merci d'entrer un prénom valide"});
+            return false 
+        }
+        if(nom.length < 2){
+            this.setState({error : "Merci d'entrer un nom valide"});
+            return false
+        }
+
+        if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail)){
+            this.setState({error : "Merci d'entrer un mail valide"});
+            return false
+        }
+
+        if(fonction.length < 4){
+            this.setState({error : "Merci d'entrer une fonction valide"});
+            return false
+        }
+        if(password.length >= 1 && password.length <6){
+            this.setState({error : "Le mot de passe doit contenir au moins 6 caractères"});
+            return false
+        }
+
+        return true
+
+
+    }
 
     clickSubmit = event => {
         event.preventDefault()
+        if(this.isValid()){
         const {prenom,nom,sexe,fonction,mail,password} = this.state
         const user = {
             prenom ,
@@ -44,8 +83,8 @@ class Signup extends Component {
             open : true
             
         }
-
-       signup(user)
+        
+       signup(this.userData)
        .then(data =>{
            if(data.error) this.setState( {error : data.error});
            else
@@ -60,34 +99,17 @@ class Signup extends Component {
                 redirectToReferer : true
                 
             })
-       });
+       });}
     }
         
-    
-    
 
-    render() {
-
-        const {error,redirectToReferer,open} = this.state;
-
-        if(redirectToReferer){
-
-            return <Redirect to='/signin'/>
-        }
-
-        return(
-
-            
-            <div className='container'>
-                                                                <h1>Groupomania</h1>
-                <h2 className="mt-5 mb-5">Inscrivez-vous :</h2>
-
-                    <form  method="POST">
+    signupForm = (prenom,nom,sexe,fonction,mail,password) => (
+        <form  method="POST" id="signupForm">
                         <div className="form-group">
 
 
                             <label className='text-muted'>Prénom</label>
-                            <input onChange={this.handleChange('prenom')} type="text" id="prenom" name="prenom"   required className="form-control" value={this.state.prenom}/>
+                            <input onChange={this.handleChange('prenom')} type="text" name="prenom"   required className="form-control" value={this.state.prenom}/>
                         
                          </div>
 
@@ -95,7 +117,7 @@ class Signup extends Component {
 
 
                          <label className='text-muted'>Nom</label>
-                         <input onChange={this.handleChange('nom')} type="text" id="nom" name="nom"   required className="form-control" value={this.state.nom}/>
+                         <input onChange={this.handleChange('nom')} type="text"  name="nom"   required className="form-control" value={this.state.nom}/>
                         
                          </div>
 
@@ -127,7 +149,7 @@ class Signup extends Component {
 
 
                             <label className='text-muted'>Adresse électronique</label>
-                            <input onChange={this.handleChange('mail')} type="email" id="mail" name="mail" required className="form-control" value={this.state.mail}/>
+                            <input onChange={this.handleChange('mail')} type="email"  name="mail" required className="form-control" value={this.state.mail}/>
                         
                          </div>
 
@@ -135,9 +157,17 @@ class Signup extends Component {
 
 
                          <label className='text-muted'>Mot de passe </label>
-                         <input onChange={this.handleChange('password')} type="password" id="password" name="password"  required className="form-control" value={this.state.password}/>
+                         <input onChange={this.handleChange('password')} type="password"  name="password"  required className="form-control" value={this.state.password}/>
                         
                          </div>
+
+                         <div className="form-group">
+
+
+                        <label className='text-muted'>Photo de profil</label>
+                        <input onChange={this.handleChange('image')} type="file" accept = 'image/*' name="image"   required className="form-control" />
+
+                        </div>
 
                         
                         
@@ -151,21 +181,45 @@ class Signup extends Component {
 
                         <div 
                             className = 'alert alert-danger'
-                            style = {{display : error ? "" : "none"}}>
+                            style = {{display : this.state.error ? "" : "none"}}>
 
-                                {this.error}
+                                {this.state.error}
                         </div>
 
-                        <div
+                        {/* <div
 
                             className="alert alert-info"
                             style = {{display : open ? "" : "none"}}>
 
                                 Votre compte a bien était crée <Link to="/signin">Connectez-vous</Link>
-                        </div>
+                        </div> */}
 
 
                     </form>
+
+
+
+    ) 
+    
+    
+
+    render() {
+
+        const {error,redirectToReferer,open,prenom,nom,sexe,fonction,mail,password} = this.state;
+
+        if(redirectToReferer){
+
+            return <Redirect to='/signin'/>
+        }
+
+        return(
+
+            
+            <div className='container'>
+                                                                
+                <h2 className="mt-5 mb-5">Inscrivez-vous :</h2>
+
+                {this.signupForm(prenom,nom,sexe,fonction,mail,password)}
             </div>
         );
     }

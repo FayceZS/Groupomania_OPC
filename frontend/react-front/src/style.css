@@ -5,15 +5,23 @@ body {
     flex-wrap: wrap;
     flex-direction: column;
     padding-top: 110px;
-    background: #f9f9f9 
+    background-image: url("./images/email-pattern.png");
+    
 }
 
 #root{
     width : 100%;
-    
+    overflow-x: hidden;
 }
 
 #signinForm{
+    background-color: white;
+    padding : 20px;
+    border : 1px solid black;
+    width : 100%;
+}
+
+#signupForm{
     background-color: white;
     padding : 20px;
     border : 1px solid black
@@ -32,12 +40,13 @@ body {
     position : fixed;
     width : 100%;
     top : 0px;
-    right : 0px;
+    
     height : 110px;
     font-size : 15px;
     z-index: 1;
     display:flex;
     justify-content: flex-end;
+    
 } 
 .nav-pills{
     background-image: url('./images/icon-left-font-monochrome-white.svg') ;
@@ -45,16 +54,71 @@ body {
     background-color : black;
 }
 
+#menuIcon{
+    height : 80px;
+    width:80px;
+    background-color: white;
+    margin : auto;
+    cursor : pointer;
+    border-radius: 20px;
+}
+
+
+.menuButtons{
+    background-color: black!important;
+    margin-right: 15px;
+    width:280px;
+    display:flex;
+    flex-direction: column;
+    margin-top:100px;
+    border-radius: 0px 15px 0px 15px;;
+    box-shadow: 0 10px 10px -5px;
+    
+}
+
+.btn-nav>p{
+    margin-top: 20px;
+}
 
 
 .nav-item{
-    width : 150px;
-    flex:none!important;
-    margin-right : 15px;
+    width : 250px;
+    margin : auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: none;
+    /* flex:none!important;
+    margin-right : 15px; */
 }
 
-.nav-item>a {
-    padding : 0px;
+/* .nav-item>a {
+    font-size : 16px;
+    padding : 2px;
+    color : white;
+   font-weight: bolder;
+    cursor: pointer;
+} */
+
+#callMenuButton{
+    margin : auto;
+    
+    position : absolute;
+    top : 15px;
+    right : 70px
+}
+
+.btn-nav{
+    font-size : 16px!important;
+    margin : auto;
+    height : 80px;
+    color : white!important;
+    font-weight: bolder;
+    text-align: center;
+    padding : 10px;
+    word-wrap: break-word;
+    text-align: center;
+    
+
 }
 
 .nav-link {
@@ -72,6 +136,12 @@ body {
     cursor: pointer;
 }
 
+.commentIcon{
+    float : right;
+    margin-bottom: 15px;
+    cursor : pointer;
+}
+
 
 .whiteText p{
     color : white!important;
@@ -86,6 +156,13 @@ body {
     margin : 0px;
 }
 
+.uniqueProfilContainer{
+    background-color: white;
+    max-height : 600px;
+    margin-top: 100px!important;
+    padding : 20px;
+}
+
 
 .jumbotron-fluid{                               /*CSS concernant la page d'accueil*/
     width : 75%;
@@ -95,18 +172,22 @@ body {
     margin : auto;
     margin-bottom: 15px;
     padding : 20px;
-    background-color: white;
     border-radius : 12px;
     box-shadow: 0 10px 10px -5px;
-    border : 1px solid black;
+    background-image: url('./images/what-the-hex.png');
     
 }
 
-#postImg{
+.fa-sort-amount-down{
+    margin-top : 20px;
+}
+
+.postImg{
     width : 70%;
     height : 45%;
-    border : 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     align-self: center;
+    border-radius : 12px;
 }
 
 #goPost {
@@ -138,23 +219,36 @@ body {
 .homeContainer {
     display : flex;
     
+    
+}
+
+.alert-danger{
+    word-break: break-all;
 }
 
 .postContainer {
     width : auto;
     margin : auto;
-    height : 400px;
+    height : auto;
+    max-height: 550px;
     border : 1px solid black;
     padding : 20px;
     background-color: white;
     display : flex;
     margin-top : 25px;
+    margin-bottom: 50px;
    flex-direction: column; 
    position : fixed;
    overflow : hidden;
    box-shadow: 5px 5px 20px;
    z-index: 1;
    
+}
+
+.publicationsContainer{
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 
@@ -260,6 +354,26 @@ body {
     margin-bottom: 30px;
 }
 
+.userDescription{
+    border : none!important;
+    margin-top : 15px!important;
+    margin-bottom : 15px!important;
+    padding-top : 5px!important;
+}
+
+.userDescription>p{
+    font-size : 30px;
+}
+
+.card-bodyUsers{
+    max-height : 150px!important;
+}
+
+.goProfilUsers {
+    margin-top: 10px!important;
+    margin-bottom: 20px!important;
+}
+
 
 
 
@@ -277,9 +391,10 @@ body {
 .publicationButtons{
     display : flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    flex-direction: column;
-    width : 60px;
+    justify-content: space-around;
+    flex-direction: row;
+    width : auto;
+    margin-top : 30px;
 }
 
 .publicationContainer>.jumbotron{
@@ -304,21 +419,21 @@ body {
 
 .card {
     margin : 15px;
-    width : 280px;
-    height : 350px;
+    width : 400px;
+    height : 500px;
     display: flex;
     flex-direction: column;
-    border : 1px solid black;
     border-radius: 10px;
 
 }
 
-#usersImg {
+.usersImg {
     width : 70%;
     height : 40%;
     
     margin : auto;
     margin-top: 25px;
+    margin-bottom : 25px;
 }
 
 .card-body{
@@ -335,15 +450,42 @@ body {
     height : auto;
 }
 
-#card-bodyContent{
+.card-bodyContent{
     margin : auto;
     word-wrap: break-word;
+    border : 1px groove black;
+    
+   padding : 10px;
+    border-radius: 10px;
+    background-color: white;
+    font-size : 15px;
 }
 
-#goProfil{
+.card-bodyContentHome{
+   
+    margin-top : 10px;
+    margin-bottom : 10px;
+    padding : 20px;
+    border-radius: 10px;
+    background-color: white;
+    word-wrap: break-word;
+    border : 1px groove black;
+
+}
+
+.goProfil{
     width : 50%;
     margin : auto;
     margin-bottom : 20px;
+}
+
+#modifyProfilUser{
+    background-color: white;
+}
+
+.btnEditPost {
+    padding : 10px;
+    width : 200px!important;
 }
 
 
@@ -352,6 +494,7 @@ body {
 #singlePostImg {
     max-width: 500px;
     max-height : 500px
+
 }
 
 .publicationContainer{
@@ -372,12 +515,7 @@ body {
     justify-content: center;
 }
 
-#goHomeFromSinglePost {
-    margin : auto;
-    margin-top : 5px;
-    margin-bottom : 10px;
-    
-}
+
 
 @media all and (max-width : 500px){
     .card-text{
@@ -395,7 +533,8 @@ body {
     }
 
     .nav-fill{
-        height : auto;
+        /* height : auto; */
+        flex-direction: column;
         
     }
 
@@ -406,6 +545,32 @@ body {
     body{
         padding-top: 220px;
     }
+
+    .uniqueProfilContainer{
+        margin-top : 0px!important;
+    }
+
+    
+
+    .nav-item{
+        margin-left : 5px;
+    }
+}
+
+@media all and (max-width : 575px){
+    .uniqueProfilContainer{
+        
+        width : 90%!important;
+        border : 1px solid black;
+    }
+
+    .card-img-top{
+        margin : auto;
+    }
+}
+
+@media all and (min-width : 500px){
+
 }
 
 @media all and (max-width : 660px){
@@ -419,6 +584,7 @@ body {
         flex:none!important;
         margin-right : 5px;
         word-wrap: break-word;
+        
     }
 
     .nav-item>a>p{
@@ -427,21 +593,78 @@ body {
     }
 
     .postContainer{
-        height : 200px;
+        height : 80px;
     }
+
+    .menuButtons{
+        
+        position : absolute;
+        float : right;
+        right : 0px;
+    }
+
+    .nav-item{
+        margin-left: 5px;
+    }
+
+
 
     .postContainer:hover{
         height : 400px;
-        top : 30px;
+        /* top : 30px; */
     }
 
 }
 
-@media all and (max-width : 1130px){
+
+
+
+@media all and (min-width : 1200px){
+    .homeContainer {
+        
+        padding-top: 120px;
+        
+        
+    }
+}
+
+@media all and (max-width : 650px){
     .nav-pills{
-       
-        background-image : none;
-        flex-wrap: wrap;
+        background-image: none;
+        background-color : black;
+    }
+}
+
+@media all and (max-width : 321px){
+    .card-bodyContentHome>p{
+        font-size : 12px;
+        text-align : left;
     }
 
+    .card-bodyContentHome>h5{
+        font-size : 14px
+    }
+
+    .btn-raised{
+        width : 180px!important;
+    }
+
+    .menuButtons{
+        text-align : left;
+    }
+
+    .nav-item{
+        margin-left : 10px;
+    }
+
+    
+
+
+}
+
+@media all and (max-width : 425px){
+
+    .nav-fill{
+        z-index : 2;
+    }
 }

@@ -140,7 +140,14 @@ class EditPost extends Component {
 
     render() {
 
-const {titre,Texte,error} = this.state
+const {titre,Texte,error,redirectToHome} = this.state
+
+if(redirectToHome){
+
+        
+        
+    window.location.reload();
+    }
 
         return (
             <div id='modifyFormulaireContainer'>

@@ -63,6 +63,11 @@ class Signup extends Component {
             return false
         }
 
+        if(password.length === 0){
+            this.setState({error : "Merci d'entrer un mot de passe"});
+            return false
+        }
+
         return true
 
 

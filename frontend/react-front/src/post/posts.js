@@ -48,7 +48,7 @@ class Posts extends Component {
               </div>
             </div>
             <Link to={`post/${post.id}`} className="btn btn-raised btn-primary btn-small" id="goPost">
-              Voir le poste
+            GO !  <i className='fas fa-sign-in-alt w3-large w3-text-white'></i>
             </Link>
             <div id="postsDetails">
 

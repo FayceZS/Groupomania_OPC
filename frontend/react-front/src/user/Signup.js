@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
 import {signup} from "../auth";
-import {Link} from 'react-router-dom';
 
 class Signup extends Component {
 
@@ -73,16 +72,16 @@ class Signup extends Component {
         event.preventDefault()
         if(this.isValid()){
         const {prenom,nom,sexe,fonction,mail,password} = this.state
-        const user = {
-            prenom ,
-            nom ,
-            sexe ,
-            fonction ,
-            mail ,
-            password : password,
-            open : true
+        // const user = {
+        //     prenom ,
+        //     nom ,
+        //     sexe ,
+        //     fonction ,
+        //     mail ,
+        //     password : password,
+        //     open : true
             
-        }
+        // }
         
        signup(this.userData)
        .then(data =>{
@@ -165,7 +164,7 @@ class Signup extends Component {
 
 
                         <label className='text-muted'>Photo de profil</label>
-                        <input onChange={this.handleChange('image')} type="file" accept = 'image/*' name="image"   required className="form-control" />
+                        <input onChange={this.handleChange('image')} type="file" accept = 'image/*' name="image"   required className="form-control updateButton" />
 
                         </div>
 
@@ -217,7 +216,7 @@ class Signup extends Component {
             
             <div className='container'>
                                                                 
-                <h2 className="mt-5 mb-5">Inscrivez-vous :</h2>
+                <h2 className="mt-5 mb-5 homeButtons">Inscrivez-vous :</h2>
 
                 {this.signupForm(prenom,nom,sexe,fonction,mail,password)}
             </div>

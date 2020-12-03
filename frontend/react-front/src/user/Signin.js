@@ -70,8 +70,8 @@ class Signin extends Component {
 
             
             <div className='container'>
-                                                                <h1>Groupomania</h1>
-                <h2 className="mt-5 mb-5">Connectez-vous :</h2>
+                                                                
+                <h2 className="mt-5 mb-5 homeButtons">Connectez-vous :</h2>
 
                     <form id="signinForm" method="POST">
                         

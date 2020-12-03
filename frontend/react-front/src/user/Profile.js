@@ -112,7 +112,7 @@ class Profile extends Component{
 
                         }  
 
-                        {isAuthenticated().type == "moderator"&&isAuthenticated() && isAuthenticated().userId != user.id  &&(
+                        {isAuthenticated().type === "moderator"&&isAuthenticated() && isAuthenticated().userId !== user.id  &&(
 
                                                     
                         <div>
@@ -127,7 +127,7 @@ class Profile extends Component{
 
                         }  
 
-                            {isAuthenticated().type == "admin"&&isAuthenticated() && isAuthenticated().userId != user.id  &&(
+                            {isAuthenticated().type === "admin"&&isAuthenticated() && isAuthenticated().userId !== user.id  &&(
 
                                                                                 
                             <div>

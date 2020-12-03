@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {singlePost,remove} from './apiPost'
 import {isAuthenticated} from '../auth/index'
-import {Link,Redirect,Route} from 'react-router-dom';
+import {Link,Redirect} from 'react-router-dom';
 import EditPost from './editPost';
 import Comments from '../comments/comments'
 
@@ -52,7 +52,7 @@ class SinglePost extends Component {
     }
 
     isEditing = () => {
-        if(this.state.editing == false){
+        if(this.state.editing === false){
         this.setState({editing : true})
 
         
@@ -101,7 +101,7 @@ class SinglePost extends Component {
                 <>
 
                     <button onClick = {this.isEditing} className = 'btn btn-raised btn-warning btnEditPost'>
-                    <i class='far fa-address-card w3-xlarge w3-text-white'></i>   Modifier le post
+                    <i className='far fa-address-card w3-xlarge w3-text-white'></i>   Modifier le post
                     </button>
 
                     <button onClick = {this.deleteConfirmed} className = 'btn btn-raised btn-danger btnEditPost'>
@@ -112,7 +112,7 @@ class SinglePost extends Component {
 
             }
 
-            {isAuthenticated().type == 'admin' && isAuthenticated() && isAuthenticated().userId != post.idUser&&
+            {isAuthenticated().type === 'admin' && isAuthenticated() && isAuthenticated().userId !== post.idUser&&
                 <>
 
                     <button onClick = {this.isEditing} className = 'btn btn-raised btn-warning btnEditPost'>
@@ -127,7 +127,7 @@ class SinglePost extends Component {
 
             }
 
-            {isAuthenticated().type == 'moderator'&& isAuthenticated() && isAuthenticated().userId != post.idUser &&
+            {isAuthenticated().type === 'moderator'&& isAuthenticated() && isAuthenticated().userId !== post.idUser &&
                 <>
 
                     <button onClick = {this.isEditing} className = 'btn btn-raised btn-warning btnEditPost'>

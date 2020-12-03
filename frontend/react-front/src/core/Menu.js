@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link, withRouter} from 'react-router-dom';
 import{ signOut, isAuthenticated} from '../auth';
+import img from '../images/icon-left-font-monochrome-white.svg'
 
 
 
@@ -15,7 +16,7 @@ const callMenu = ()=>{
         const menu = document.getElementsByClassName('nav-item');
         const array = Array.prototype.slice.call(menu);
         array.forEach(element => {
-                if(element.style.display == "none"){
+                if(element.style.display === "none"){
                         element.style.display = "flex"
                 }else{
                         element.style.display = "none"
@@ -25,9 +26,7 @@ const callMenu = ()=>{
         });
 }
 
-const addEventMenuIcon = ()=>{
-               console.log(document.querySelector('#menuIcon'))
-                               }
+
 
 
 
@@ -39,6 +38,7 @@ const Menu = ({history}) => (
          
         <ul className="nav nav-pills nav-fill ">
         {/* <img src= './icon.png' id = "logoNav"alt='logo'/>        */}
+        <img src={img} className = "navImg" alt="logo"/>
         <span id='callMenuButton' onClick={callMenu}><i className='fas fa-sort-amount-down w3-xxlarge w3-text-white'></i></span>
             <div className = 'menuButtons'>
 
@@ -87,14 +87,14 @@ const Menu = ({history}) => (
                         
                         <li className="nav-item">
                             
-                                <Link className="btn btn-primary btn-lg btn-block btn-nav" to = {`/user/${isAuthenticated().userId}`}><i className='fas fa-user-alt w3-xxlarge w3-text-white'></i>  Profil</Link>
+                                <Link className="btn btn-primary btn-lg btn-block btn-nav" to = {`/user/${isAuthenticated().userId}`}><i className='fas fa-user-alt w3-xxlarge w3-text-white' ></i>  Profil</Link>
                                 
                              
                          </li>
 
                         <li className="nav-item">
                             
-                                <Link className="btn btn-primary btn-lg btn-block btn-nav" to = '' style ={isActive(history,"/signup")} onClick={()=>signOut(()=>{history.push('/')})}><i className='fas fa-share-square w3-xxlarge w3-text-white'></i>   Deconnexion</Link>
+                                <Link className="btn btn-primary btn-lg btn-block btn-nav" to = '' style ={isActive(history,"/signup")} onClick={()=>signOut(()=>{history.push('/')})} ><i className='fas fa-share-square w3-xxlarge w3-text-white'></i>   Deconnexion</Link>
                            
                         </li>
                     </>

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {isAuthenticated} from '../auth/index';
 import {create} from './apiPost';
-import {Redirect} from 'react-router-dom';
-import Posts from './posts';
+// import {Redirect} from 'react-router-dom';
+// import Posts from './posts';
 import {read} from '../user/apiUser';
 
-const formContainer = document.querySelector(".formContainer");
+
 
 class NewPost extends Component {
 
@@ -151,7 +151,7 @@ class NewPost extends Component {
                         
                         
                         
-                        <button onClick={this.clickSubmit} className='btn btn-raised btn-primary'>Créer ma publication</button>
+                        <button onClick={this.clickSubmit} className='btn btn-raised btn-primary'>Publier   <i className='fas fa-sign-in-alt w3-large w3-text-white'></i></button>
                         
                         
                         { this.state.loading ? <div className="jumbotron text-center">

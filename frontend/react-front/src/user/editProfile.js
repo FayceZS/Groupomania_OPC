@@ -130,7 +130,7 @@ class EditProfile extends Component {
 
 
                         <label className='text-muted'>Photo de profil</label>
-                        <input onChange={this.handleChange('image')} type="file" accept = 'image/*' name="image"   required className="form-control" />
+                        <input onChange={this.handleChange('image')} type="file" accept = 'image/*' name="image"   required className="form-control updateButton" />
 
                         </div>
 

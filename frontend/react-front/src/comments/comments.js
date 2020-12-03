@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {createComment,removeComment} from './apiComment';
 import {isAuthenticated} from '../auth/index';
-import {Link} from 'react-router-dom';
+
 import{getCommentsOfPost} from './apiComment';
 
 class Comments extends Component {
@@ -19,7 +19,7 @@ class Comments extends Component {
         
         getCommentsOfPost(isAuthenticated().token,document.location.href.split('/').pop())
         .then(data => {
-            if(data.error && data != undefined){
+            if(data.error && data !== undefined){
                 console.log(data.error)
             }else{
                 this.setState({commentaires : data});
@@ -119,8 +119,8 @@ class Comments extends Component {
                     
 
                    {isAuthenticated() && isAuthenticated().userId === comment.user_id && <> <button onClick={this.deleteConfirmed.bind(this,commentaires,i)} className='fas fa-trash w3-xlarge w3-text-red commentIcon'></button></>}
-                   {isAuthenticated().type === 'moderator' && isAuthenticated().userId != comment.user_id && <> <i className='fas fa-trash w3-xlarge w3-text-red commentIcon' onClick = {this.deleteConfirmed.bind(this,commentaires,i)}></i></>}
-                   {isAuthenticated().type === 'admin' && isAuthenticated().userId != comment.user_id && <> <button onClick={this.deleteConfirmed.bind(this,commentaires,i)} className='fas fa-trash w3-xlarge w3-text-red commentIcon'></button></>}
+                   {isAuthenticated().type === 'moderator' && isAuthenticated().userId !== comment.user_id && <> <i className='fas fa-trash w3-xlarge w3-text-red commentIcon' onClick = {this.deleteConfirmed.bind(this,commentaires,i)}></i></>}
+                   {isAuthenticated().type === 'admin' && isAuthenticated().userId !== comment.user_id && <> <button onClick={this.deleteConfirmed.bind(this,commentaires,i)} className='fas fa-trash w3-xlarge w3-text-red commentIcon'></button></>}
                     <p className="commentText">{comment.Texte}</p>
                     <p className="commentAuteur">
                       Auteur : {comment.auteur}
@@ -151,7 +151,7 @@ class Comments extends Component {
 
     render() {
 
-        const{commentaires,text,deleted,showDelete} = this.state;
+        const{commentaires,deleted} = this.state;
 
         if(deleted){
             window.location.reload();
